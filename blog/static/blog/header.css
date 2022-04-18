@@ -1,0 +1,80 @@
+.header-main {
+    position: relative;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    background-color: #00bea4; /* this is the default color #007bff */
+}
+
+.section-header{
+    margin-bottom:20px;
+}
+
+.logo {
+    color: #fff;
+    font-size: 25px;
+    font-weight: 600;
+}
+
+.brand-wrap {
+    text-decoration: none !important;
+}
+
+.widget-header {
+    display: inline-block;
+    vertical-align: middle;
+    position: relative;
+}
+
+.search-form {
+    border: 1px solid #ffffff !important;
+}
+
+.search-button {
+    color: #00bea4;
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
+
+.navbar-main {
+    background-color: #fff;
+}
+
+.navbar-toggler {
+    color: rgba(0, 0, 0, 0.5);
+    color: rgba(0, 0, 0, 0.5);
+    border-color: rgba(0, 0, 0, 0.1) !important;
+}
+
+.navbar-toggler {
+    padding: 4px;
+    font-size: 1.25rem;
+    line-height: 1;
+    background-color: transparent;
+    border: 1px solid transparent;
+    border-radius: 0.37rem;
+}
+
+.navbar-toggler-icon {
+    background-image: url(https://img.icons8.com/ios/50/000000/menu.png);
+}
+
+.nav-link {
+    color: #00bea4;
+}
+
+.vl {
+    border-left: 1px solid #fff;
+    height: 100%;
+}
+
+.fa-plus,
+.fa-user,
+.fa-sign-in,
+.fa-sign-out {
+    color: #fff;
+}
+
+#SignUp{
+    color:#fff;
+    font-weight: bolder;
+}
