@@ -11,11 +11,11 @@ Blog website built with Django framework.
 
 ### Prerequisites
 
-First you should create a virtual environment about writing the following command.
+First you should create a virtual environment by writing the following command.
 
 `Python -m venv env`
 
-Then activate it about writing the following commands.
+Then activate it by writing the following commands.
 
 `cd env`
 
@@ -31,7 +31,7 @@ Then type the following two Commands.
 
 `python manage.py migrate`
 
-Then the last command.
+Then type the last command.
 
 `Python manage.py runserver`
 
