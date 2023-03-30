@@ -1,0 +1,91 @@
+{% load static %}
+{% load has_group %}
+<!DOCTYPE html>
+<html>
+  <head>
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <link rel="icon" href="{% static 'favicon.ico' %}">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0/css/all.min.css">
+
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/3.2.1/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/contact.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+  
+  {% if title %}
+    <title>Django Blog - {{ title }}</title>
+  {% else %}
+    <title>Django Blog</title>
+  {% endif %}
+  </head>
+  <body>
+    {% include 'blog/header.html' %}
+    <main role="main" class="container">
+      <div class="row">
+        <div class="col-md-8">
+          {% if messages %}
+            {% for message in messages %}
+              {% if "warning" in message.tags %}
+                <div class="alert alert-warning alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% elif "success" in message.tags %}
+                <div class="alert alert-success alert-{{ message.tags }}">
+                  {{ message }}
+                </div>
+              {% endif %}
+            {% endfor %}
+          {% endif %} 
+          {% block content %}{% endblock %}
+        </div>
+        <div class="col-md-4">
+          <div class="content-section">
+            <h3>Sidebar</h3>
+              <ul class="list-group">
+                <li class="list-group-item list-group-item-light">
+                  <a href="{% url 'last_five_posts' %}">Last Five Posts</a>
+                </li>
+                <li class="list-group-item list-group-item-light">
+                  <a href="{% url 'latest_jobs' %}">Latest Jobs</a>
+                </li>
+                {% if request.user.is_staff or request.user|has_group:"staff" %}
+                  <li class="list-group-item list-group-item-light">
+                    <a href="{% url 'show_categories' %}">Edit Blog Categories (Admins &amp; Staff)</a>
+                  </li>
+                {% endif %}
+              </ul>
+            </h3>
+          </div>
+        </div>
+      </div>
+    </main>
+    {% include 'blog/footer.html' %}
+    
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script> 
+      jQuery('#waterdrop').raindrops({color:'#1c1f2f', canvasHeight:150, density: 0.1, frequency: 20});
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="http://code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    <script src="https://daniellaharel.com/raindrops/js/raindrops.js"></script>
+    <script src="{% static 'blog/upBtn.js' %}"></script>
+  </body>
+</html>

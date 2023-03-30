@@ -1,0 +1,36 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'blog/main.css' %}">
+
+<footer class="bg-light text-center">
+  <div class="container p-4 pb-0">
+    <section class="">
+      <form method="POST" action="{% url 'newsletter' %}">
+        {% csrf_token %}
+        <div class="row d-flex justify-content-center">
+          <div class="col-auto">
+            <p class="pt-2">
+              <strong>Sign up for our newsletter</strong>
+            </p>
+          </div>
+
+          <div class="col-md-5 col-12">
+            <div class="form-outline mb-4">
+              <input type="email" name ="email" placeholder="Email address" id="form5Example2" class="form-control" required />
+            </div>
+          </div>
+
+          <div class="col-auto">
+            <button type="submit" class="btn btn-primary mb-4">
+              Subscribe
+            </button>
+          </div>
+        </div>
+      </form>
+    </section>
+  </div>
+  <div class="text-center p-3" style="color:white;background-color:#00bea4">
+    &copy; <script>document.write(new Date().getFullYear())</script> Made With <i class="fa fa-heart"></i> By
+    <a id="anchorFooter" href="https://github.com/muhammadgalhoum" target="_blank">Muhammad Galhoum</a>
+  </div>
+</footer>

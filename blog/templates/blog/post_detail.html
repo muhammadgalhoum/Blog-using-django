@@ -1,0 +1,84 @@
+{% extends "blog/base.html" %}
+{% load static %}
+{% load has_group %}
+{% block content %}
+  <article class="media content-section">
+    <img class="rounded-circle article-img" src="{{ post.author.profile.avatar_thumbnail.url }}">
+    <div class="media-body">
+      <div class="article-metadata">
+        {% if is_favourite %}
+          <a style="float:right;" href="{% url 'favourite_post' post.pk %}"><i class="fas fa-heart fa-lg" style="color:red !important;"></i></a>
+        {% else %}
+          <a style="float:right;" href="{% url 'favourite_post' post.pk %}"><i class="far fa-heart fa-lg"></i></a>
+        {% endif %}
+        <a class="mr-2" href="{% url 'user-posts' post.author.username %}">{{ post.author }}</a>
+        <small class="text-muted">{{ post.date_posted|timesince}}</small><br>
+        <a style="color:#21d192;font-weight:bold;" class="mr-2" href="{% url 'posts_by_category' post.category.pk %}">{{ post.category.name }}</a>
+        {% if post.author == user %}
+          <div>
+            <a class="btn btn-secondary btn-sm mt-1 mb-1" href="{% url 'post-update' post.id %}">
+              <i class="fas fa-edit"></i>&nbsp;Update
+            </a>
+            <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' post.id %}">
+              <i class="fa fa-trash-o" aria-hidden="true"></i>&nbsp;Delete
+            </a>
+          </div>
+        {% endif %}
+      </div>
+      <h2 class="article-title">{{ post.title }}</h2>
+      <p class="article-content">{{ post.content }}</p>
+      {% if post.image.url != None %}
+        <br/>
+        <div class="post-image">
+          <div class="thumbnail">
+            <a href="{{ post.image.url }}" target="_balnk">
+              <figure class="figure">
+                <img src="{{ post.image.url }}" class="figure-img img-fluid rounded" alt="Image for {{ post.title|title }} post" title="Post Image">
+                <figcaption style="color:#428bca; font-weight: bold" class="figure-caption text-right">Press on the Image to Show the Original Size</figcaption>
+              </figure>
+            </a>
+          </div>
+        </div>
+      {% endif %}
+      <hr/>
+      <div class="media-body">
+        {% if user.is_authenticated %}
+          <form action="{% url 'post_like' post.id %}" method="POST">
+            {% csrf_token %}
+            {% if post_is_liked %}
+            <button type="submit" name="post_id" value="{{post.id}}" class="btn btn"><i class="fa-solid fa-thumbs-up" style="color:blue !important;"></i></button>
+            {% else %}
+            <button type="submit" name="post_id" value="{{post.id}}" class="btn btn"><i class="fa-regular fa-thumbs-up"></i></button>
+            {% endif %}
+          </form>
+        {% else %}
+          <a class="btn btn-outline-info" href="{% url 'login' %}?next={{request.path}}">Log in to like this article!</a><br>
+        {% endif %}
+        <strong class="text-secondary">{{ total_likes }} Like{{ total_likes|pluralize}}</strong>
+      </div>
+    </div>
+  </article>
+  <div>
+    <strong>{{comments.count}} Comment{{comments|pluralize}}</strong>
+  </div>
+  <form method="POST">
+    {% csrf_token %}
+    {{comment_form.as_p}}
+    <input type="submit" value="comment" name="comment" class="btn btn-success btn-sm mt-1 mb-1">
+  </form>    
+  {% for comment in comments %}
+    <div class="article-metadata" style="padding:5px; background-color: white; border: 2px solid #009688">
+      <img style="width: 40px; height:40px" class="rounded-circle article-img" src="{{ post.author.profile.avatar_thumbnail.url }}">
+      <strong style="color:#00c851 !important;"><small>{{comment.user}} - {{comment.comment_date|timesince}}</small></strong>
+      {% if request.user.is_staff or request.user|has_group:"staff" %}
+        <br/>
+        <p style="display:inline-block;">{{ comment.content}}</p>
+        <a style="float:right; padding: 1px 2px 2px 5px" class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'delete-comment' comment.id %}">
+          <i class="fa fa-trash" aria-hidden="true"></i>&nbsp;
+        </a>
+      {% else %}
+        <p>{{ comment.content}}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% endblock content %}
